@@ -1,16 +1,15 @@
 ---
 import site from '../data/site.json';
 import Socials from '../components/Socials.astro';
-interface Props { title?: string; description?: string; image?: string; current?: 'home' | 'work'; }
+interface Props { title?: string; description?: string; image?: string; current?: 'home' | 'work' | 'about' | 'contact'; }
 const { title, description = site.description, image = '/media/hero-poster.webp', current } = Astro.props;
 const fullTitle = title ? `${title} | ${site.siteName}` : `${site.siteName}: Design, Motion & AI Content, Sydney`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 const links = [
-  { href: '/#about', label: 'about' },
+  { href: '/about/', label: 'about', key: 'about' },
   { href: '/work/', label: 'work', key: 'work' },
-  { href: '/#services', label: 'services' },
-  { href: '#contact', label: 'contact' },
+  { href: '/contact/', label: 'contact', key: 'contact' },
 ];
 ---
 <!DOCTYPE html>
@@ -44,7 +43,7 @@ const links = [
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu">menu</button>
 </nav>
 <slot />
-<footer id="contact">
+<footer>
   <Socials />
   <small>© {new Date().getFullYear()} All rights reserved · <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></small>
   <a href="/" class="mark">{site.siteName}</a>

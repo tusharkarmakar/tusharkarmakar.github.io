@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+const a = site.about;
+const paras = a.bio.split(/\n\s*\n/).filter(Boolean);
+const marquee = [...a.clients, ...a.clients];
+---
+<Base title="About" description={a.lede} image={a.portrait} current="about">
+  <header class="page-head" slot="top">
+    <div class="intro">
+      <p class="eyebrow fade" data-delay=".15">{a.eyebrow}</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1><span class="ln"><span class="rise">{a.title}</span></span> <span class="ln"><span class="rise dim">{a.titleDim}</span></span></h1>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lede fade" data-delay=".9">{a.lede}</p>
+    </div>
+  </header>
+
+  <main class="about">
+    <section class="ab-intro">
+      <figure class="ab-portrait reveal"><div class="frame"><img src={a.portrait} alt="Portrait of Tushar Karmakar" loading="eager"></div></figure>
+      <div class="ab-text">
+        <div class="ab-bio reveal">{paras.map(p => <p>{p}</p>)}</div>
+        <dl class="facts">
+          {a.facts.map(f => <div class="reveal" data-stagger><dt>{f.value}</dt><dd>{f.label}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="ab-block" aria-labelledby="exp-h">
+      <h2 id="exp-h" class="ab-h reveal"><span>01</span>Experience</h2>
+      <ol class="rows">
+        {a.experience.map(e => <li class="reveal"><span class="r-years">{e.years}</span><span class="r-role">{e.role}</span><span class="r-org">{e.org}</span></li>)}
+      </ol>
+    </section>
+
+    <section class="ab-block" aria-labelledby="skills-h">
+      <h2 id="skills-h" class="ab-h reveal"><span>02</span>Skills &amp; tools</h2>
+      <div class="toolgrid">
+        <div class="reveal" data-stagger><h3>Core skills</h3><ul class="pills">{a.skills.map(s => <li>{s}</li>)}</ul></div>
+        <div class="reveal" data-stagger><h3>Design</h3><ul class="pills">{a.designTools.map(s => <li>{s}</li>)}</ul></div>
+        <div class="reveal" data-stagger><h3>AI</h3><ul class="pills pills-ai">{a.aiTools.map(s => <li>{s}</li>)}</ul></div>
+      </div>
+    </section>
+
+    <section class="ab-block" aria-labelledby="edu-h">
+      <h2 id="edu-h" class="ab-h reveal"><span>03</span>Education</h2>
+      <ol class="rows">
+        {a.education.map(e => <li class="reveal"><span class="r-years">{e.years}</span><span class="r-role">{e.role}</span><span class="r-org">{e.org}</span></li>)}
+      </ol>
+    </section>
+
+    <section class="clients" aria-label="Clients and studios">
+      <p class="ab-h"><span>04</span>Brands &amp; studios</p>
+      <div class="marquee" aria-hidden="true"><div class="track">{marquee.map(c => <span>{c}</span>)}</div></div>
+      <p class="sr-only">{a.clients.join(', ')}</p>
+    </section>
+
+    <section class="cta">
+      <p class="eyebrow">Next</p>
+      <h2>Have something that needs to <em>move?</em></h2>
+      <a class="btn" href="/contact/">Start a project <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 6h16M11 1l5 5-5 5"/></svg></a>
+    </section>
+  </main>
+</Base>

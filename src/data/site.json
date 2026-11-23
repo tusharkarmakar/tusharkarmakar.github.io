@@ -20,21 +20,155 @@
     "titleDim": "to motion",
     "intro": "Every project starts with a question, not a tool. I blend brand strategy, design craft and AI-powered production to turn a brief into visuals that move on screen, in store and in the feed.",
     "steps": [
-      { "title": "Listen", "text": "The brief, the audience and the one thing the work has to say. Clarity first, pixels later." },
-      { "title": "Explore", "text": "Moodboards, AI explorations and rough frames to find the strongest direction fast." },
-      { "title": "Craft", "text": "Design, motion and AI generation, refined by hand to a brand-ready finish." },
-      { "title": "Deliver", "text": "Every format and channel, on time, with organised files your team can actually use." }
+      {
+        "title": "Listen",
+        "text": "The brief, the audience and the one thing the work has to say. Clarity first, pixels later."
+      },
+      {
+        "title": "Explore",
+        "text": "Moodboards, AI explorations and rough frames to find the strongest direction fast."
+      },
+      {
+        "title": "Craft",
+        "text": "Design, motion and AI generation, refined by hand to a brand-ready finish."
+      },
+      {
+        "title": "Deliver",
+        "text": "Every format and channel, on time, with organised files your team can actually use."
+      }
     ]
   },
   "contact": {
     "email": "tusharkarmakar31@gmail.com",
     "location": "Sydney, Australia",
-    "available": true
+    "available": true,
+    "eyebrow": "Contact",
+    "title": "Let's",
+    "titleDim": "collaborate.",
+    "lede": "Have an idea, a launch or a brief that needs to move? Tell me a little about it and I'll reply within two working days.",
+    "formKey": "",
+    "projectTypes": [
+      "Campaign",
+      "Motion / video",
+      "Branding",
+      "AI content",
+      "Something else"
+    ]
   },
   "socials": {
     "behance": "https://www.behance.net/tusharkarmakar31",
     "linkedin": "https://www.linkedin.com/in/tushar-creativedesigner",
     "youtube": "https://www.youtube.com/playlist?list=PLS6QWMA-bSrWuVEVfcOZ1xtH83zxNd3Lp",
     "facebook": "https://www.facebook.com/tushar.karmakar.018"
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "Designer, motion artist,",
+    "titleDim": "AI content creator.",
+    "lede": "I'm Tushar Karmakar, a Sydney-based senior creative designer turning briefs into campaigns, motion and AI-powered visuals that people actually stop for.",
+    "portrait": "/uploads/about/portrait.webp",
+    "bio": "For more than five years I've designed for technology, telecom and SaaS brands, from Samsung's retail and launch campaigns to Akash DTH's nationwide marketing and identities for NGOs and start-ups.\n\nToday I work as a freelance editor and motion designer with M&C Saatchi World Services, blending classic design craft with AI tools like Midjourney, Runway and Veo to move from idea to finished film faster, without losing the human touch.\n\nI studied Computer Science at BRAC University, so I'm as comfortable talking to developers and product teams as I am to art directors.",
+    "facts": [
+      {
+        "value": "5+",
+        "label": "Years in design"
+      },
+      {
+        "value": "100+",
+        "label": "Assets for Samsung"
+      },
+      {
+        "value": "40+",
+        "label": "Stores branded"
+      },
+      {
+        "value": "17",
+        "label": "Featured projects"
+      }
+    ],
+    "experience": [
+      {
+        "years": "2026 — Now",
+        "role": "Editor & Motion Graphics Designer (Freelance)",
+        "org": "M&C Saatchi World Services"
+      },
+      {
+        "years": "2025 — 2026",
+        "role": "Senior Visual Content Producer",
+        "org": "UtiliOS"
+      },
+      {
+        "years": "2024 — 2025",
+        "role": "Senior Associate Creative Designer",
+        "org": "Samsung"
+      },
+      {
+        "years": "2023 — 2024",
+        "role": "Creative Designer",
+        "org": "Akash DTH TV"
+      },
+      {
+        "years": "2022 — 2023",
+        "role": "Designer & Motion Artist",
+        "org": "Loudworks"
+      },
+      {
+        "years": "2021 — 2022",
+        "role": "Executive Visualizer",
+        "org": "Optimus Business Group"
+      }
+    ],
+    "education": [
+      {
+        "years": "2016 — 2021",
+        "role": "B.Sc. in Computer Science",
+        "org": "BRAC University"
+      }
+    ],
+    "skills": [
+      "Creative Direction",
+      "Motion Graphics",
+      "Visual Storytelling",
+      "Branding",
+      "UI/UX",
+      "Content Production",
+      "Campaign Development",
+      "Stakeholder Management"
+    ],
+    "designTools": [
+      "Photoshop",
+      "Illustrator",
+      "After Effects",
+      "Premiere Pro",
+      "Figma",
+      "Canva"
+    ],
+    "aiTools": [
+      "Midjourney",
+      "Runway",
+      "Google Flow",
+      "Veo 3",
+      "HeyGen",
+      "ElevenLabs",
+      "Magnific AI",
+      "Adobe Firefly",
+      "ChatGPT",
+      "Gemini",
+      "Claude"
+    ],
+    "clients": [
+      "Samsung",
+      "M&C Saatchi World Services",
+      "Akash DTH",
+      "Oxfam",
+      "BRAC",
+      "UtiliOS",
+      "VUMI",
+      "Suvastu",
+      "Akij",
+      "Hamid Foundation",
+      "PAW Foundation",
+      "Loudworks"
+    ]
   }
 }

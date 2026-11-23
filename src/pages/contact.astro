@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Socials from '../components/Socials.astro';
+import site from '../data/site.json';
+const c = site.contact as any;
+const hasKey = !!(c.formKey && c.formKey.trim());
+---
+<Base title="Contact" description={c.lede} current="contact">
+  {hasKey && <script slot="head" is:inline src="https://web3forms.com/client/script.js" async defer></script>}
+  <header class="page-head" slot="top">
+    <div class="intro">
+      <p class="eyebrow fade" data-delay=".15">{c.eyebrow}</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1><span class="ln"><span class="rise">{c.title}</span></span> <span class="ln"><span class="rise dim">{c.titleDim}</span></span></h1>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lede fade" data-delay=".9">{c.lede}</p>
+    </div>
+  </header>
+
+  <main class="contact">
+    <section class="ct-grid">
+      <aside class="ct-info reveal">
+        <p class="ab-h"><span>01</span>Say hello</p>
+        <a class="ct-email" href={`mailto:${c.email}`}>{c.email}</a>
+        <button class="copy-btn" type="button" data-copy={c.email}>Copy email</button>
+        <dl class="ct-meta">
+          <div><dt>Based in</dt><dd>{c.location}</dd></div>
+          <div><dt>Local time</dt><dd id="clock">Sydney</dd></div>
+          {c.available && <div><dt>Status</dt><dd><i class="dot"></i>Available for projects</dd></div>}
+        </dl>
+        <Socials />
+      </aside>
+
+      <form class="ct-form reveal" id="contact-form" action="https://api.web3forms.com/submit" method="POST" data-key={hasKey ? 'yes' : ''} data-email={c.email} novalidate>
+        <p class="ab-h"><span>02</span>Tell me about your project</p>
+        <input type="hidden" name="access_key" value={c.formKey || ''}>
+        <input type="hidden" name="subject" value="New enquiry from collabwithtushar">
+        <input type="hidden" name="from_name" value="Portfolio contact form">
+        <!-- spam traps: real people never see or fill these -->
+        <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_started" value="">
+        <div class="field half"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required maxlength="80"></div>
+        <div class="field half"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="120"></div>
+        <fieldset class="field">
+          <legend>What do you need?</legend>
+          <div class="chips">{c.projectTypes.map((t: string, i: number) => <label class="chip"><input type="radio" name="project_type" value={t} checked={i === 0}><span>{t}</span></label>)}</div>
+        </fieldset>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="6" required minlength="10" maxlength="3000"></textarea></div>
+        {hasKey && <div class="h-captcha" data-captcha="true"></div>}
+        <div class="ct-actions">
+          <button class="btn btn-dark" type="submit">Send message <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 6h16M11 1l5 5-5 5"/></svg></button>
+          <p class="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+</Base>

@@ -188,13 +188,61 @@ content:
             fields:
               - { name: title, label: Title, type: string }
               - { name: text, label: Text, type: text }
-      - name: contact
-        label: Contact
+      - name: about
+        label: About page
         type: object
         fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: titleDim, label: Title (dim part), type: string }
+          - { name: lede, label: Intro line, type: text }
+          - { name: portrait, label: Portrait, type: image }
+          - { name: bio, label: Bio (leave a blank line between paragraphs), type: text }
+          - name: facts
+            label: Numbers
+            type: object
+            list: { max: 4 }
+            fields:
+              - { name: value, label: Number, type: string }
+              - { name: label, label: Label, type: string }
+          - name: experience
+            label: Experience
+            description: Drag to reorder. Newest first.
+            type: object
+            list:
+              collapsible: { collapsed: true, summary: "{years} · {org}" }
+            fields:
+              - { name: years, label: Years, type: string }
+              - { name: role, label: Role, type: string }
+              - { name: org, label: Company, type: string }
+          - name: education
+            label: Education
+            type: object
+            list: true
+            fields:
+              - { name: years, label: Years, type: string }
+              - { name: role, label: Degree, type: string }
+              - { name: org, label: Institution, type: string }
+          - { name: skills, label: Core skills, type: string, list: true }
+          - { name: designTools, label: Design tools, type: string, list: true }
+          - { name: aiTools, label: AI tools, type: string, list: true }
+          - { name: clients, label: Brands & studios (scrolling strip), type: string, list: true }
+      - name: contact
+        label: Contact page
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: titleDim, label: Title (dim part), type: string }
+          - { name: lede, label: Intro line, type: text }
           - { name: email, label: Email, type: string }
           - { name: location, label: Location, type: string }
           - { name: available, label: Show "Available for projects", type: boolean }
+          - name: formKey
+            label: Web3Forms access key
+            description: Free key from web3forms.com (sent to your email). Leave empty and the form opens the visitor's email app instead.
+            type: string
+          - { name: projectTypes, label: Project type options, type: string, list: true }
       - name: socials
         label: Social links
         type: object

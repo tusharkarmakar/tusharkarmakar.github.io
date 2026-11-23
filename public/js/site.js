@@ -69,6 +69,48 @@
     b.innerHTML = `<iframe src="${src}" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
   }, { once: true }));
 
+  // copy email
+  $$('.copy-btn').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Copied'; }
+    catch { b.textContent = b.dataset.copy; }
+    setTimeout(() => b.textContent = 'Copy email', 2000);
+  }));
+
+  // contact form: Web3Forms + honeypot + time-trap + validation
+  const form = $('#contact-form');
+  if (form) {
+    const started = Date.now();
+    const status = $('.status', form), btn = $('button[type=submit]', form);
+    const say = (t, cls) => { status.textContent = t; status.className = 'status ' + (cls || ''); };
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      $$('.err', form).forEach(x => x.remove());
+      let bad = false;
+      $$('[required]', form).forEach(f => {
+        if (!f.checkValidity()) { bad = true; const m = document.createElement('span'); m.className = 'err'; m.textContent = f.type === 'email' ? 'Please enter a valid email.' : 'Please fill this in.'; f.after(m); }
+      });
+      if (bad) return say('Please check the highlighted fields.', 'bad');
+      const data = Object.fromEntries(new FormData(form));
+      // bots: tick the hidden box or submit within seconds of loading
+      if (data.botcheck || Date.now() - started < 3000) return say('Thanks! Your message has been sent.', 'ok');
+      if (!form.dataset.key) {
+        const body = encodeURIComponent(`${data.message}\n\n${data.name} · ${data.email} · ${data.project_type}`);
+        location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Project enquiry')}&body=${body}`;
+        return say('Opening your email app…');
+      }
+      if ('h-captcha-response' in data && !data['h-captcha-response']) return say('Please complete the captcha.', 'bad');
+      delete data.botcheck; delete data._started;
+      btn.disabled = true; say('Sending…');
+      try {
+        const r = await fetch(form.action, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
+        const j = await r.json();
+        if (r.ok && j.success) { form.reset(); say('Thanks! Your message has been sent. I\'ll reply soon.', 'ok'); }
+        else say(j.message || 'Something went wrong. Please email me directly.', 'bad');
+      } catch { say('Network error. Please email me directly.', 'bad'); }
+      finally { btn.disabled = false; if (window.hcaptcha) try { hcaptcha.reset(); } catch {} }
+    });
+  }
+
   if (reduce) return;
   // signature: colour blooms near the viewport centre; ghost word parallax
   const imgs = $$('.frame img');
