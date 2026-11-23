@@ -19,6 +19,9 @@ const w = site.work;
     <ol class="steps">
       {w.steps.map((s, i) => <li class="reveal" data-stagger><span class="n">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3><p>{s.text}</p></li>)}
     </ol>
+    <ol class="steps-mini" aria-hidden="true">
+      {w.steps.map((s, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{s.title}</li>)}
+    </ol>
   </header>
   <main>
     <section class="allworks" aria-labelledby="all-h">

@@ -8,7 +8,8 @@
     "subline": "Sydney-based creative making campaigns, motion and AI-generated visuals for brands like Samsung, Oxfam and BRAC.",
     "video": "/media/hero-bw.mp4",
     "videoMobile": "/media/hero-bw-720.mp4",
-    "poster": "/media/hero-poster.webp"
+    "poster": "/media/hero-poster.webp",
+    "videoColor": "/media/hero-color.mp4"
   },
   "homeWorks": {
     "statement": "Design, motion & AI,",
@@ -53,7 +54,9 @@
       "Branding",
       "AI content",
       "Something else"
-    ]
+    ],
+    "whatsapp": "61449918662",
+    "whatsappLabel": "+61 449 918 662"
   },
   "socials": {
     "behance": "https://www.behance.net/tusharkarmakar31",

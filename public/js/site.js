@@ -20,18 +20,18 @@
     if (reduce) v.pause();
   }
 
-  // mobile menu
+  // mobile / tablet menu: hamburger morphs into a close (X) button
   const mb = $('.menu-btn'), mm = $('#mmenu');
   if (mb && mm) {
     const setMenu = open => {
-      mm.hidden = !open; mb.setAttribute('aria-expanded', open); mb.textContent = open ? 'close' : 'menu';
-      document.body.style.overflow = open ? 'hidden' : '';
-      Object.assign(mb.style, open ? { position: 'fixed', right: '22px', top: '28px' } : { position: '', right: '', top: '' });
+      mm.hidden = !open; mb.classList.toggle('open', open);
+      mb.setAttribute('aria-expanded', open); mb.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.style.overflow = open ? 'hidden' : ''; document.body.classList.toggle('menu-open', open);
     };
     mb.addEventListener('click', () => setMenu(mm.hidden));
     mm.addEventListener('click', e => { if (e.target.tagName === 'A') setMenu(false); });
     addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
-    addEventListener('resize', () => { if (innerWidth > 900) setMenu(false); });
+    addEventListener('resize', () => { if (innerWidth > 1024) setMenu(false); });
   }
 
   // Sydney clock
@@ -109,6 +109,42 @@
       } catch { say('Network error. Please email me directly.', 'bad'); }
       finally { btn.disabled = false; if (window.hcaptcha) try { hcaptcha.reset(); } catch {} }
     });
+  }
+
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // custom cursor: a circle that inverts whatever is under it
+  const cur = $('.cursor');
+  if (cur && fine) {
+    root.classList.add('has-cursor');
+    let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
+    addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; cur.classList.add('on'); }, { passive: true });
+    document.addEventListener('pointerleave', () => cur.classList.remove('on'));
+    addEventListener('pointerdown', () => cur.classList.add('down'));
+    addEventListener('pointerup', () => cur.classList.remove('down'));
+    document.addEventListener('pointerover', e => cur.classList.toggle('big', !!e.target.closest('a, button, label, input, textarea, select, .tile')));
+    const k = reduce ? 1 : 0.22;
+    const loop = () => { cx += (x - cx) * k; cy += (y - cy) * k; cur.style.transform = `translate3d(${cx}px, ${cy}px, 0)`; requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  }
+
+  // hero: reveal the original colour video in a soft circle around the cursor
+  const hero = $('.hero'), vc = $('.hero .v-color'), vb = $('.hero .v-bw');
+  if (hero && vc && vb && fine && innerWidth > 900 && !reduce) {
+    vc.src = vc.dataset.src; vc.load();
+    let mx = -999, my = -999, tx = mx, ty = my, r = 0, tr = 0, inside = false;
+    hero.addEventListener('pointerenter', e => { inside = true; const b = hero.getBoundingClientRect(); mx = tx = e.clientX - b.left; my = ty = e.clientY - b.top; vc.play().catch(() => {}); });
+    hero.addEventListener('pointermove', e => { const b = hero.getBoundingClientRect(); tx = e.clientX - b.left; ty = e.clientY - b.top; });
+    hero.addEventListener('pointerleave', () => { inside = false; });
+    const step = () => {
+      tr = inside ? Math.max(180, innerWidth * 0.14) : 0;
+      r += (tr - r) * 0.08; mx += (tx - mx) * 0.14; my += (ty - my) * 0.14;
+      hero.style.setProperty('--mx', mx.toFixed(1) + 'px'); hero.style.setProperty('--my', my.toFixed(1) + 'px'); hero.style.setProperty('--r', r.toFixed(1) + 'px');
+      if (vc.readyState >= 2 && Math.abs(vc.currentTime - vb.currentTime) > 0.08) vc.currentTime = vb.currentTime;
+      if (!inside && r < 1 && !vc.paused) vc.pause();
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   }
 
   if (reduce) return;

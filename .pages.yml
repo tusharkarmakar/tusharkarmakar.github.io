@@ -166,6 +166,7 @@ content:
           - { name: subline, label: Sub line, type: text }
           - { name: video, label: Background video (desktop), type: file }
           - { name: videoMobile, label: Background video (mobile), type: file }
+          - { name: videoColor, label: Colour video (revealed under the cursor), type: file }
           - { name: poster, label: Video poster image, type: image }
       - name: homeWorks
         label: Home works statement
@@ -236,6 +237,8 @@ content:
           - { name: titleDim, label: Title (dim part), type: string }
           - { name: lede, label: Intro line, type: text }
           - { name: email, label: Email, type: string }
+          - { name: whatsapp, label: WhatsApp number (digits only with country code), type: string }
+          - { name: whatsappLabel, label: WhatsApp number as shown, type: string }
           - { name: location, label: Location, type: string }
           - { name: available, label: Show "Available for projects", type: boolean }
           - name: formKey

@@ -299,3 +299,53 @@ footer .mark{justify-self:end;font-size:28px}
 }
 @media (prefers-reduced-motion:reduce){.track{animation:none}}
 .field label.chip{text-transform:none;letter-spacing:0;color:var(--ink);font-size:14px}
+
+/* ===== hamburger ===== */
+.menu-btn{width:48px;height:48px;padding:0;border-radius:50%;display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;background:rgba(10,10,10,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);position:relative;z-index:45}
+.menu-btn span{display:block;width:18px;height:1.5px;background:var(--paper);border-radius:2px;transition:transform .4s var(--in),opacity .25s}
+.menu-btn.open{position:fixed;top:22px;right:22px}
+.menu-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.menu-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mmenu{animation:menuIn .45s var(--in)}
+.mmenu a{opacity:0;transform:translateY(20px);animation:menuItem .6s var(--in) forwards}
+.mmenu a:nth-child(2){animation-delay:.06s}.mmenu a:nth-child(3){animation-delay:.12s}
+@keyframes menuIn{from{opacity:0}}
+@keyframes menuItem{to{opacity:1;transform:none}}
+@media (max-width:1024px){
+  .links{display:none}.menu-btn{display:flex}
+  .site-nav{padding:28px 22px}
+}
+
+/* ===== custom cursor ===== */
+.cursor{position:fixed;left:0;top:0;width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:9999;opacity:0;transition:opacity .25s,width .35s var(--in),height .35s var(--in),margin .35s var(--in);will-change:transform}
+.cursor.on{opacity:1}
+.cursor.big{width:64px;height:64px;margin:-32px 0 0 -32px}
+.cursor.down{width:26px;height:26px;margin:-13px 0 0 -13px}
+.has-cursor,.has-cursor *{cursor:none!important}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* ===== hero colour reveal ===== */
+.hero .v-color{opacity:1;transform:none;z-index:1;-webkit-mask-image:radial-gradient(circle var(--r) at var(--mx,-999px) var(--my,-999px),#000 0%,#000 35%,transparent 100%);mask-image:radial-gradient(circle var(--r) at var(--mx,-999px) var(--my,-999px),#000 0%,#000 35%,transparent 100%)}
+.hero .v-color:not([src]){display:none}
+.hero .copy,.hero .bottom{z-index:4}
+.hero::after{z-index:2}
+
+/* ===== work: compact process on mobile ===== */
+.steps-mini{display:none}
+@media (max-width:900px){
+  .page-head .steps{display:none}
+  .steps-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;list-style:none;margin:48px 0 0;padding:18px 0 0;border-top:1px solid rgba(244,243,240,.16)}
+  .steps-mini li{font-size:13px;font-weight:500;letter-spacing:-.01em;display:flex;flex-direction:column;gap:6px}
+  .steps-mini span{font-size:10px;letter-spacing:.2em;opacity:.5;font-weight:400}
+  .page-head{padding-bottom:56px}
+}
+
+/* ===== contact: whatsapp ===== */
+.ct-wa{display:flex;align-items:center;gap:16px;margin-top:28px;padding:18px 22px;border:1px solid rgba(12,12,12,.18);border-radius:16px;transition:background .3s var(--st),color .3s var(--st),border-color .3s}
+.ct-wa svg{width:30px;height:30px;flex:none}
+.ct-wa span{display:flex;flex-direction:column;gap:3px}
+.ct-wa i{font-style:normal;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+.ct-wa b{font-weight:500;font-size:18px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ct-wa:hover{background:#1f7a44;border-color:#1f7a44;color:#fff}
+body.menu-open .site-nav{z-index:50}

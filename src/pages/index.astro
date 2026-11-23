@@ -9,10 +9,11 @@ const h = site.hero;
 ---
 <Base>
   <header class="hero" id="top" slot="top">
-    <video autoplay muted loop playsinline preload="auto" poster={h.poster} aria-hidden="true">
+    <video class="v-bw" autoplay muted loop playsinline preload="auto" poster={h.poster} aria-hidden="true">
       <source src={h.videoMobile} type="video/mp4" media="(max-width: 900px)">
       <source src={h.video} type="video/mp4">
     </video>
+    <video class="v-color" muted loop playsinline preload="none" aria-hidden="true" data-src={(h as any).videoColor || "/media/hero-color.mp4"}></video>
     <img class="fallback" src={h.poster} alt="" aria-hidden="true">
     <div class="copy">
       <p class="eyebrow fade" data-delay=".2">{h.eyebrow}</p>
