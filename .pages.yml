@@ -1,0 +1,206 @@
+# Pages CMS: the admin portal for Collab W/ Tushar.
+# Sign in at https://app.pagescms.org with GitHub and open this repository.
+# Every save commits to GitHub; the site rebuilds and goes live in about 1–2 minutes.
+
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  # ───────────────────────── Projects ─────────────────────────
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      fields: [title, tag, order, featured, draft]
+      primary: title
+      sort: [order, title]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: summary
+        label: Short line
+        description: One sentence shown under the title at the top of the project page.
+        type: string
+      - name: body
+        label: Description
+        description: The main project description.
+        type: rich-text
+      - name: cover
+        label: Thumbnail / cover image
+        description: Shown in the project grids. Portrait 4:5 works best (e.g. 1200 × 1500).
+        type: image
+        required: true
+      - name: coverFocus
+        label: Thumbnail focus
+        description: Which part of the cover to keep when it's cropped square on the home page.
+        type: select
+        default: center
+        options:
+          values: [top, center, bottom]
+      - name: media
+        label: Images & media
+        description: Drag items to reorder. The first item appears first on the page.
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{index}. {type} · {ratio} · {width}"
+        fields:
+          - name: type
+            label: Type
+            type: select
+            default: image
+            options:
+              values:
+                - { name: image, label: Image upload }
+                - { name: link, label: Media link (YouTube, Vimeo, MP4, Lottie, Behance…) }
+          - name: image
+            label: Image
+            description: For a link, this becomes the cover/poster (optional).
+            type: image
+          - name: url
+            label: Media link
+            description: Paste a YouTube, YouTube Shorts, Vimeo, .mp4, LottieFiles or any other link.
+            type: string
+          - name: ratio
+            label: Ratio
+            type: select
+            default: auto
+            options:
+              values:
+                - { name: auto, label: Original shape }
+                - { name: "1:1", label: "1:1 Square" }
+                - { name: "4:5", label: "4:5 Portrait" }
+                - { name: "3:4", label: "3:4 Portrait" }
+                - { name: "2:3", label: "2:3 Portrait" }
+                - { name: "9:16", label: "9:16 Story / Reel" }
+                - { name: "3:2", label: "3:2 Landscape" }
+                - { name: "4:3", label: "4:3 Landscape" }
+                - { name: "16:9", label: "16:9 Widescreen" }
+                - { name: "21:9", label: "21:9 Cinema" }
+          - name: width
+            label: Width
+            description: Two "half" items sit side by side; three "third" items share a row.
+            type: select
+            default: full
+            options:
+              values:
+                - { name: full, label: Full width }
+                - { name: half, label: Half }
+                - { name: third, label: Third }
+          - name: caption
+            label: Caption
+            type: string
+      - name: client
+        label: Client
+        type: string
+      - name: role
+        label: Role
+        type: string
+      - name: agency
+        label: Agency
+        type: string
+      - name: year
+        label: Year
+        type: string
+      - name: categories
+        label: Categories
+        description: Used by the filter buttons on the Work page.
+        type: select
+        options:
+          multiple: true
+          values:
+            - { name: campaign, label: Campaign }
+            - { name: motion, label: Motion }
+            - { name: branding, label: Branding }
+            - { name: social, label: Social }
+            - { name: ai, label: AI }
+      - name: tag
+        label: Label under thumbnail
+        description: Optional. Leave empty to show the categories.
+        type: string
+      - name: order
+        label: Order
+        description: Lower numbers appear first (10, 20, 30…). Also sets previous/next.
+        type: number
+        default: 100
+      - name: featured
+        label: Show on home page
+        description: The first four featured projects appear on the home page.
+        type: boolean
+        default: false
+      - name: draft
+        label: Hide (draft)
+        type: boolean
+        default: false
+
+  # ───────────────────────── Site text ─────────────────────────
+  - name: site
+    label: Site text & links
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: siteName
+        label: Site name
+        type: string
+      - name: description
+        label: SEO description
+        type: text
+      - name: hero
+        label: Home hero
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: titleDim, label: Title (dim word), type: string }
+          - { name: subline, label: Sub line, type: text }
+          - { name: video, label: Background video (desktop), type: file }
+          - { name: videoMobile, label: Background video (mobile), type: file }
+          - { name: poster, label: Video poster image, type: image }
+      - name: homeWorks
+        label: Home works statement
+        type: object
+        fields:
+          - { name: statement, label: Statement, type: string }
+          - { name: statementDim, label: Statement (dim part), type: string }
+      - name: work
+        label: Work page
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: titleDim, label: Title (dim part), type: string }
+          - { name: intro, label: Intro, type: text }
+          - name: steps
+            label: Process steps
+            type: object
+            list: { min: 1, max: 6 }
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: text, label: Text, type: text }
+      - name: contact
+        label: Contact
+        type: object
+        fields:
+          - { name: email, label: Email, type: string }
+          - { name: location, label: Location, type: string }
+          - { name: available, label: Show "Available for projects", type: boolean }
+      - name: socials
+        label: Social links
+        type: object
+        fields:
+          - { name: behance, label: Behance, type: string }
+          - { name: linkedin, label: LinkedIn, type: string }
+          - { name: youtube, label: YouTube, type: string }
+          - { name: facebook, label: Facebook, type: string }
+          - { name: instagram, label: Instagram, type: string }

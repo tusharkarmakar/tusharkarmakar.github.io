@@ -1,0 +1,54 @@
+---
+import site from '../data/site.json';
+import Socials from '../components/Socials.astro';
+interface Props { title?: string; description?: string; image?: string; current?: 'home' | 'work'; }
+const { title, description = site.description, image = '/media/hero-poster.webp', current } = Astro.props;
+const fullTitle = title ? `${title} | ${site.siteName}` : `${site.siteName}: Design, Motion & AI Content, Sydney`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+const links = [
+  { href: '/#about', label: 'about' },
+  { href: '/work/', label: 'work', key: 'work' },
+  { href: '/#services', label: 'services' },
+  { href: '#contact', label: 'contact' },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{fullTitle}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+<meta property="og:type" content="website">
+<meta property="og:title" content={fullTitle}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content={ogImage}>
+<meta property="og:url" content={canonical}>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/manrope-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/site.css">
+<slot name="head" />
+</head>
+<body>
+<script is:inline>document.documentElement.classList.add('js')</script>
+<div class="grain" aria-hidden="true"></div>
+<div class="mmenu" id="mmenu" hidden>{links.map(l => <a href={l.href}>{l.label}</a>)}</div>
+<slot name="top" />
+<nav class="fade site-nav" data-delay="0" aria-label="Main">
+  <a href="/" class="mark">{site.siteName}</a>
+  <div class="links">{links.map(l => <a href={l.href} aria-current={current && l.key === current ? 'page' : undefined}>{l.label}</a>)}</div>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu">menu</button>
+</nav>
+<slot />
+<footer id="contact">
+  <Socials />
+  <small>© {new Date().getFullYear()} All rights reserved · <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></small>
+  <a href="/" class="mark">{site.siteName}</a>
+</footer>
+<script is:inline src="/js/site.js"></script>
+</body>
+</html>

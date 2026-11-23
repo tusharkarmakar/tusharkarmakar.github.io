@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import Tile from '../../components/Tile.astro';
+import site from '../../data/site.json';
+import { getProjects, CATEGORY_LABELS } from '../../lib/projects';
+const projects = await getProjects();
+const used = Object.keys(CATEGORY_LABELS).filter(c => projects.some(p => p.data.categories.includes(c as any)));
+const w = site.work;
+---
+<Base title="Work" description="Selected work by Tushar Karmakar: campaigns, motion, brand identities and AI-generated visuals for Samsung, Akash DTH, Oxfam, BRAC and more." current="work">
+  <header class="page-head" slot="top">
+    <div class="intro">
+      <p class="eyebrow fade" data-delay=".15">{w.eyebrow}</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1><span class="ln"><span class="rise">{w.title}</span></span><span class="ln gap"><span class="rise dim">{w.titleDim}</span></span></h1>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lede fade" data-delay=".9">{w.intro}</p>
+    </div>
+    <ol class="steps">
+      {w.steps.map((s, i) => <li class="reveal" data-stagger><span class="n">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3><p>{s.text}</p></li>)}
+    </ol>
+  </header>
+  <main>
+    <section class="allworks" aria-labelledby="all-h">
+      <div class="ghost" data-axis="x" data-speed="0.12" aria-hidden="true">MY WORKS</div>
+      <div class="bar-row">
+        <h2 id="all-h">Selected projects<sup>{projects.length}</sup></h2>
+        <div class="filters" role="group" aria-label="Filter projects">
+          <button class="filter" data-f="all" aria-pressed="true">All</button>
+          {used.map(c => <button class="filter" data-f={c} aria-pressed="false">{CATEGORY_LABELS[c]}</button>)}
+        </div>
+      </div>
+      <div class="pgrid">{projects.map((p, i) => <Tile p={p} index={i} />)}</div>
+    </section>
+  </main>
+</Base>

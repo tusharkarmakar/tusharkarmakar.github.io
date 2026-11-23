@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Tile from '../components/Tile.astro';
+import site from '../data/site.json';
+import { getProjects } from '../lib/projects';
+const all = await getProjects();
+const featured = (all.filter(p => p.data.featured).length ? all.filter(p => p.data.featured) : all).slice(0, 4);
+const h = site.hero;
+---
+<Base>
+  <header class="hero" id="top" slot="top">
+    <video autoplay muted loop playsinline preload="auto" poster={h.poster} aria-hidden="true">
+      <source src={h.videoMobile} type="video/mp4" media="(max-width: 900px)">
+      <source src={h.video} type="video/mp4">
+    </video>
+    <img class="fallback" src={h.poster} alt="" aria-hidden="true">
+    <div class="copy">
+      <p class="eyebrow fade" data-delay=".2">{h.eyebrow}</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1><span class="ln"><span class="rise">{h.title}</span></span><span class="ln gap"><span class="rise dim">{h.titleDim}</span></span></h1>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="sub fade" data-delay="1">{h.subline}</p>
+    </div>
+    <div class="bottom fade" data-delay="1.3">
+      <a class="scroll" href="#work"><span class="mouse" aria-hidden="true"></span>Scroll down</a>
+      <div class="status"><span id="clock">Sydney</span>{site.contact.available && <span><i class="dot"></i>Available for projects</span>}</div>
+    </div>
+  </header>
+  <main>
+    <section class="works" id="work" aria-labelledby="works-h">
+      <div class="side">
+        <div class="ghost" aria-hidden="true"><span>MY</span><span>WORKS</span></div>
+        <div class="statement">
+          <h2 id="works-h">{site.homeWorks.statement} <em>{site.homeWorks.statementDim}</em></h2>
+          <div class="bar"></div>
+        </div>
+      </div>
+      <div class="grid">
+        {featured.map((p, i) => <Tile p={p} index={i} />)}
+        <a class="more reveal" href="/work/">All case studies <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 6h16M11 1l5 5-5 5"/></svg></a>
+      </div>
+    </section>
+  </main>
+</Base>

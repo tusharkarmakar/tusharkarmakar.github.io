@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { getProjects, tagFor, linkKind, ratioCss } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const list = await getProjects();
+  return list.map((p, i) => ({
+    params: { slug: p.id },
+    props: { p, prev: list[(i - 1 + list.length) % list.length], next: list[(i + 1) % list.length], n: i + 1, total: list.length },
+  }));
+}
+const { p, prev, next, n, total } = Astro.props;
+const d = p.data;
+const { Content } = await render(p);
+const meta = [
+  ['Client', d.client], ['Role', d.role], ['Agency', d.agency], ['Year', d.year], ['Services', tagFor(p)],
+].filter(([, v]) => v);
+const items = d.media.map(m => {
+  const k = m.type === 'link' && m.url ? linkKind(m.url) : null;
+  let ratio = m.ratio;
+  if (ratio === 'auto' && k) ratio = /shorts\//.test(m.url || '') ? '9:16' : (k.kind === 'youtube' || k.kind === 'vimeo') ? '16:9' : 'auto';
+  return { ...m, k, ratio, ar: ratioCss(ratio) };
+});
+const hasLottie = items.some(i => i.k?.kind === 'lottie');
+const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+---
+<Base title={d.title} description={d.summary || `${d.title}: ${tagFor(p)} by Tushar Karmakar.`} image={d.cover} current="work">
+  {hasLottie && <script slot="head" is:inline type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"></script>}
+  <header class="page-head proj-head" slot="top">
+    <div class="intro">
+      <p class="eyebrow fade" data-delay=".15">{[tagFor(p), d.year].filter(Boolean).join(' · ')}</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1><span class="ln"><span class="rise">{d.title}</span></span></h1>
+      <div class="rule" aria-hidden="true"></div>
+      {d.summary && <p class="lede fade" data-delay=".8">{d.summary}</p>}
+    </div>
+    <p class="proj-count fade" data-delay="1"><span>{String(n).padStart(2, '0')}</span> / {String(total).padStart(2, '0')}</p>
+  </header>
+
+  <main class="proj">
+    <section class="proj-info">
+      <dl class="meta reveal">
+        {meta.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+      <div class="desc reveal"><Content /></div>
+    </section>
+
+    <section class="media-flow" aria-label="Project media">
+      {items.map((m, i) => (
+        <figure class={`m m-${m.width} reveal`} style={m.ar ? `--ar:${m.ar}` : undefined}>
+          {m.type === 'image' && m.image && (
+            <img src={m.image} alt={m.caption || `${d.title}, image ${i + 1}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" class={m.ar ? 'fixed' : ''}>
+          )}
+          {m.k && (m.k.kind === 'youtube' || m.k.kind === 'vimeo') && (
+            <button class="embed" type="button" data-kind={m.k.kind} data-id={m.k.id} aria-label={`Play video: ${m.caption || d.title}`}>
+              {m.image ? <img src={m.image} alt="" loading="lazy"> : m.k.kind === 'youtube' && <img src={`https://i.ytimg.com/vi/${m.k.id}/hqdefault.jpg`} alt="" loading="lazy" onerror="this.remove()">}
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+            </button>
+          )}
+          {m.k?.kind === 'video' && <video src={m.url} poster={m.image || undefined} autoplay muted loop playsinline class="fixed"></video>}
+          {m.k?.kind === 'lottie' && <dotlottie-wc src={m.url} autoplay loop class="fixed"></dotlottie-wc>}
+          {m.k?.kind === 'external' && (
+            <a class="extlink" href={m.url} target="_blank" rel="noopener">
+              {m.image && <img src={m.image} alt="" loading="lazy">}
+              <span><b>{m.caption || 'View project'}</b><i>{host(m.url!)} ↗</i></span>
+            </a>
+          )}
+          {m.caption && m.k?.kind !== 'external' && <figcaption>{m.caption}</figcaption>}
+        </figure>
+      ))}
+    </section>
+
+    <nav class="pn" aria-label="More projects">
+      <a class="pn-prev" href={`/work/${prev.id}/`}>
+        <img src={prev.data.cover} alt="" loading="lazy">
+        <span><i>← Previous project</i><b>{prev.data.title}</b></span>
+      </a>
+      <a class="pn-next" href={`/work/${next.id}/`}>
+        <span><i>Next project →</i><b>{next.data.title}</b></span>
+        <img src={next.data.cover} alt="" loading="lazy">
+      </a>
+    </nav>
+    <p class="back"><a href="/work/">All projects</a></p>
+  </main>
+</Base>

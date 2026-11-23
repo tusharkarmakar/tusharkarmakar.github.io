@@ -1,0 +1,40 @@
+{
+  "siteName": "Collab W/ Tushar",
+  "description": "Tushar Karmakar, a Sydney-based senior creative designer, motion designer and AI content creator. Campaigns, motion and AI visuals for Samsung, Oxfam, BRAC and more.",
+  "hero": {
+    "eyebrow": "AI content creator · Motion · Design",
+    "title": "Simplicity Brings",
+    "titleDim": "Clarity",
+    "subline": "Sydney-based creative making campaigns, motion and AI-generated visuals for brands like Samsung, Oxfam and BRAC.",
+    "video": "/media/hero-bw.mp4",
+    "videoMobile": "/media/hero-bw-720.mp4",
+    "poster": "/media/hero-poster.webp"
+  },
+  "homeWorks": {
+    "statement": "Design, motion & AI,",
+    "statementDim": "tailored to you."
+  },
+  "work": {
+    "eyebrow": "Work · Process",
+    "title": "From brief",
+    "titleDim": "to motion",
+    "intro": "Every project starts with a question, not a tool. I blend brand strategy, design craft and AI-powered production to turn a brief into visuals that move on screen, in store and in the feed.",
+    "steps": [
+      { "title": "Listen", "text": "The brief, the audience and the one thing the work has to say. Clarity first, pixels later." },
+      { "title": "Explore", "text": "Moodboards, AI explorations and rough frames to find the strongest direction fast." },
+      { "title": "Craft", "text": "Design, motion and AI generation, refined by hand to a brand-ready finish." },
+      { "title": "Deliver", "text": "Every format and channel, on time, with organised files your team can actually use." }
+    ]
+  },
+  "contact": {
+    "email": "tusharkarmakar31@gmail.com",
+    "location": "Sydney, Australia",
+    "available": true
+  },
+  "socials": {
+    "behance": "https://www.behance.net/tusharkarmakar31",
+    "linkedin": "https://www.linkedin.com/in/tushar-creativedesigner",
+    "youtube": "https://www.youtube.com/playlist?list=PLS6QWMA-bSrWuVEVfcOZ1xtH83zxNd3Lp",
+    "facebook": "https://www.facebook.com/tushar.karmakar.018"
+  }
+}

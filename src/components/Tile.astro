@@ -1,0 +1,10 @@
+---
+import { tagFor, type Project } from '../lib/projects';
+interface Props { p: Project; index: number; }
+const { p, index } = Astro.props;
+const pos = { top: '50% 0', center: '50% 50%', bottom: '50% 100%' }[p.data.coverFocus];
+---
+<a class="tile reveal" data-stagger data-cat={p.data.categories.join(' ')} href={`/work/${p.id}/`}>
+  <div class="frame"><img src={p.data.cover} alt={p.data.title} loading="lazy" decoding="async" style={`object-position:${pos}`}></div>
+  <div class="cap"><span class="idx">{String(index + 1).padStart(2, '0')}</span><b>{p.data.title}</b><i>{tagFor(p)}</i></div>
+</a>
