@@ -173,5 +173,10 @@
       "PAW Foundation",
       "Loudworks"
     ]
+  },
+  "pageBg": {
+    "video": "/media/page-bg.mp4",
+    "videoMobile": "/media/page-bg-720.mp4",
+    "poster": "/media/page-bg-poster.webp"
   }
 }

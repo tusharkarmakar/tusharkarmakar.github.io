@@ -1,0 +1,11 @@
+---
+import site from '../data/site.json';
+const pb = (site as any).pageBg || {};
+const v = pb.video || '/media/page-bg.mp4', vm = pb.videoMobile || '/media/page-bg-720.mp4', poster = pb.poster || '/media/page-bg-poster.webp';
+---
+<div class="ph-bg" aria-hidden="true">
+  <video autoplay muted loop playsinline preload="metadata" poster={poster}>
+    <source src={vm} type="video/mp4" media="(max-width: 760px)" />
+    <source src={v} type="video/mp4" />
+  </video>
+</div>

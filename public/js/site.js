@@ -20,6 +20,14 @@
     if (reduce) v.pause();
   }
 
+  // inner page header video fades in once it can play
+  document.querySelectorAll('.ph-bg video').forEach(v => {
+    const on = () => v.classList.add('on');
+    if (v.readyState >= 3) on(); else v.addEventListener('canplay', on, { once: true });
+    v.addEventListener('error', on, true);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); on(); }
+  });
+
   // mobile / tablet menu: hamburger morphs into a close (X) button
   const mb = $('.menu-btn'), mm = $('#mmenu');
   if (mb && mm) {

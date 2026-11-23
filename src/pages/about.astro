@@ -1,4 +1,5 @@
 ---
+import PageBg from '../components/PageBg.astro';
 import Base from '../layouts/Base.astro';
 import site from '../data/site.json';
 const a = site.about;
@@ -7,6 +8,7 @@ const marquee = [...a.clients, ...a.clients];
 ---
 <Base title="About" description={a.lede} image={a.portrait} current="about">
   <header class="page-head" slot="top">
+    <PageBg />
     <div class="intro">
       <p class="eyebrow fade" data-delay=".15">{a.eyebrow}</p>
       <div class="rule" aria-hidden="true"></div>

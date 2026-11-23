@@ -1,4 +1,5 @@
 ---
+import PageBg from '../../components/PageBg.astro';
 import Base from '../../layouts/Base.astro';
 import { render } from 'astro:content';
 import { getProjects, tagFor, linkKind, ratioCss } from '../../lib/projects';
@@ -28,6 +29,7 @@ const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./,
 <Base title={d.title} description={d.summary || `${d.title}: ${tagFor(p)} by Tushar Karmakar.`} image={d.cover} current="work">
   {hasLottie && <script slot="head" is:inline type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"></script>}
   <header class="page-head proj-head" slot="top">
+    <PageBg />
     <div class="intro">
       <p class="eyebrow fade" data-delay=".15">{[tagFor(p), d.year].filter(Boolean).join(' · ')}</p>
       <div class="rule" aria-hidden="true"></div>

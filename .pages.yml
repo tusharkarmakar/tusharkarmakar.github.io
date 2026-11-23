@@ -168,6 +168,13 @@ content:
           - { name: videoMobile, label: Background video (mobile), type: file }
           - { name: videoColor, label: Colour video (revealed under the cursor), type: file }
           - { name: poster, label: Video poster image, type: image }
+      - name: pageBg
+        label: Inner page header video (About, Work, Contact, projects)
+        type: object
+        fields:
+          - { name: video, label: Video (desktop), type: file }
+          - { name: videoMobile, label: Video (mobile), type: file }
+          - { name: poster, label: Poster image, type: image }
       - name: homeWorks
         label: Home works statement
         type: object
